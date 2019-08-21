@@ -9,6 +9,10 @@ class node:
         self.left_child = None
         self.right_child = None
         self.is_traversed = False
+        # Get majority label
+        @property
+        def majority(self):
+            return 1
 
 # Create our decision tree
 def ID3():
