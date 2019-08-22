@@ -151,14 +151,10 @@ def prune(tree):
     prune = copy.deepcopy(tree)
     queue.append(prune) # Add root to queue
     while(len(queue) > 0): # For every decision node:
-        revert = copy.deepcopy(tree)
-        gone = queue.pop()
+        gone = queue.popleft()
         # Build T' pruning at removed node
         gone.is_leaf = True
-        gone.rules = None
         gone.predict = gone.majority()
-        gone.left_child = None
-        gone.right_child = None
         # If better, assign tree to pruned tree. If not, revert back and try nodes further down.
         new_error = get_error(prune, 'pa2validation.txt')
         if new_error <= best_error:
@@ -170,12 +166,14 @@ def prune(tree):
             # Assign tree to pruned tree
             tree = copy.deepcopy(prune)
         else:
-            prune = copy.deepcopy(revert)
+            gone.is_leaf = False
             if gone.left_child:
                 if not gone.left_child.is_leaf:
+                    print("APPENDING")
                     queue.append(gone.left_child) 
             if gone.right_child: 
                 if not gone.right_child.is_leaf:
+                    print("APPENDINGR")
                     queue.append(gone.right_child)
 
 # Print tree in level order via BFS
@@ -184,7 +182,7 @@ def print_tree(tree):
     queue.append(tree) # Add root to queue
     to_string = ""
     while(len(queue) > 0):
-        gone = queue.pop()
+        gone = queue.popleft()
         print("****")
         to_string += "\n****\n"
         print("Rules: " + str(gone.rules))
@@ -200,6 +198,5 @@ def print_tree(tree):
 # Find error
 if __name__ == '__main__':
     tree = ID3()
-    print(get_error(tree, 'pa2test.txt'))
+    print_tree(tree)
     prune(tree)
-    print(get_error(tree, 'pa2test.txt'))
