@@ -10,7 +10,7 @@ For more details, see pa2.pdf
 
 ## Dependencies
 
-Requires python 3 numpy and pandas, and python 3.
+Requires python 3, as well as numpy and pandas.
 
 Easiest way to get numpy is with the command `pip3 install numpy`, and likewise for pandas `pip3 install pandas`.
 
